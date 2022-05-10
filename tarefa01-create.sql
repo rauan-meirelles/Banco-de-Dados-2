@@ -38,3 +38,15 @@ CREATE TABLE projeto (
   FOREIGN KEY(cod_responsavel) REFERENCES funcionario(codigo)
   
 );
+
+CREATE TABLE atividade(
+  codigo INT AUTO_INCREMENT, 
+  nome VARCHAR(100) NOT NULL, 
+  descricao VARCHAR(500) NOT NULL, 
+  cod_responsavel INT, 
+  data_inicio DATE, 
+  data_fim DATE,
+  
+  PRIMARY KEY(codigo),
+  FOREIGN KEY(cod_responsavel) REFERENCES funcionario(codigo)
+);
