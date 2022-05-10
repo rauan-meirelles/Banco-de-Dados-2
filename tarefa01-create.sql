@@ -9,3 +9,14 @@ CREATE TABLE funcionario(
   PRIMARY key (codigo)
 );
 
+CREATE TABLE departamento(
+  codigo int AUTO_INCREMENT,
+  descricao VARCHAR(500), 
+  cod_gerente int,
+  
+  PRIMARY KEY (codigo),
+  FOREIGN KEY (cod_gerente) 
+  REFERENCES funcionario(codigo) 
+                      
+);
+
