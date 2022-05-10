@@ -5,3 +5,6 @@ AS SELECT f.nome, count(a.codigo)
 from funcionario as f, atividade as a
 WHERE f.codigo = a.cod_responsavel
 GROUP by f.codigo
+
+SELECT funcionario as "Funcionário responsável", quant as "Nº de atividades"
+from vwAtividade
