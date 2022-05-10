@@ -34,3 +34,9 @@ VALUES("Analisar os déficits da saúde", "Documentar os maiores casos de défic
 ("Fazer um mapeamento dos CRAS's da região", "Montar uma tabela com todas os CRAS's existentes na região e selecionar as 5 mais relevantes", 2, '2022-05-10', '2022-05-31'),
 ("Realizar o levantamento de gastos do governo", "Realizar uma reunião com os secretários e tomar nota de todos os gastos do governo", 1, '2022-05-10', '2022-05-31');
 
+INSERT INTO atividade_projeto(cod_projeto, cod_atividade)
+VALUES(1, 3),
+(2, 5),
+(3, 1),
+(4, 2),
+(5, 4)
