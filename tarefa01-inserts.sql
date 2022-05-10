@@ -14,3 +14,9 @@ VALUES("Departamento de Finanças", 1),
 ("Departamento de Saúde", 4),
 ("Departamento de Assistência Social", 5);
 
+UPDATE funcionario SET cod_dep = 1 WHERE codigo = 1;
+UPDATE funcionario SET cod_dep = 2 WHERE codigo = 4;
+UPDATE funcionario SET cod_dep = 3 WHERE codigo = 5;
+UPDATE funcionario SET cod_dep = 4 WHERE codigo = 3;
+UPDATE funcionario SET cod_dep = 5 WHERE codigo = 2;
+
