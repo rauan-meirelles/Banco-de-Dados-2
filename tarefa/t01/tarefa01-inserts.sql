@@ -5,7 +5,8 @@ VALUES("Adson Matheus Santos Brito", 'M', '2000-06-08', 2500.00, NULL),
 ("Joan de Azevedo Medeiros", 'M', '2000-12-11', 3500.00, NULL),
 ("Rauan Meirelles Dantas de Araujo", 'M', '2002-05-26', 4000.00, NULL),
 ("Wesley Vitor Silva de Morais", 'M', '2000-06-15', 4500.00, NULL),
-
+("Jannine Cristina Gomes Santos", 'F', '2003-02-26', 4000.00, NULL),
+("Rita de Cássia Dantas dos Santos", 'F', '1975-10-12', 3500.00, NULL),
 
 INSERT INTO departamento (descricao, cod_gerente)
 VALUES("Departamento de Finanças", 1),
@@ -15,10 +16,12 @@ VALUES("Departamento de Finanças", 1),
 ("Departamento de Assistência Social", 5);
 
 UPDATE funcionario SET cod_dep = 1 WHERE codigo = 1;
-UPDATE funcionario SET cod_dep = 2 WHERE codigo = 4;
-UPDATE funcionario SET cod_dep = 3 WHERE codigo = 5;
-UPDATE funcionario SET cod_dep = 4 WHERE codigo = 3;
-UPDATE funcionario SET cod_dep = 5 WHERE codigo = 2;
+UPDATE funcionario SET cod_dep = 2 WHERE codigo = 2;
+UPDATE funcionario SET cod_dep = 3 WHERE codigo = 3;
+UPDATE funcionario SET cod_dep = 4 WHERE codigo = 4;
+UPDATE funcionario SET cod_dep = 5 WHERE codigo = 5;
+UPDATE funcionario SET cod_dep = 2 WHERE codigo = 6;
+UPDATE funcionario SET cod_dep = 1 WHERE codigo = 7;
 
 INSERT INTO projeto(nome, descricao, cod_depto, cod_responsavel, data_inicio, data_fim)
 VALUES("Semana da Educação", "Realização de oficionas e palestras na área de educação", 2, 4, '2022-05-10', '2022-12-31'),
