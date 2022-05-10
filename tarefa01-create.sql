@@ -20,3 +20,6 @@ CREATE TABLE departamento(
                       
 );
 
+ALTER TABLE funcionario ADD COLUMN cod_dep INT;
+ALTER TABLE funcionario ADD FOREIGN KEY (cod_dep) REFERENCES departamento(codigo);
+
