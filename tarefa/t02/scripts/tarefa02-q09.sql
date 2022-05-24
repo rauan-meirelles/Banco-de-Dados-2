@@ -5,3 +5,13 @@
 **procedimento for realizado.
 */
 
+# Cadastrando cartão para cliente de código 1
+INSERT INTO milhas(cod_cliente, quantidade)
+VALUES (1,  10);
+
+#Trigger
+CREATE TRIGGER addMileageCardWhenUpdatingCustomer AFTER
+UPDATE ON cliente
+FOR EACH ROW 
+INSERT INTO milhas(cod_cliente, quantidade)
+VALUES(OLD.codigo, 0) ;
