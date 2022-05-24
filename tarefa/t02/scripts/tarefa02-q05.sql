@@ -1,4 +1,6 @@
-#Crie um gatilho que ao se adicionar um voo, seja adicionado +1 voo para o piloto daquele voo.
+/*Crie um gatilho que ao se adicionar um voo, 
+**seja adicionado +1 voo para o piloto daquele voo.
+*/
 
 #Trigger
 CREATE TRIGGER addVooToPiloto AFTER 
