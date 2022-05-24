@@ -15,3 +15,7 @@ UPDATE ON cliente
 FOR EACH ROW 
 INSERT INTO milhas(cod_cliente, quantidade)
 VALUES(OLD.codigo, 0) ;
+
+#Att cliente cod 1
+UPDATE cliente SET endereco = "Rua Vicente de Paula Santos"
+WHERE cliente.codigo = 1;
