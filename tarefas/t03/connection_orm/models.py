@@ -1,7 +1,10 @@
+from matplotlib.pyplot import table
 from peewee import *
-import sys
+# comando que gera o modelo de dados
+# python3 -m pwiz -e postgresql -u postgres -H localhost -s public -P postgres tarefa03 > /home/joan/development/bd/database-tasks-II/tarefas/t03/connection_orm/models.py
 
-database = PostgresqlDatabase('postgres', host='localhost', port=5432, user = 'postgres', password = 'postgres')
+
+database = PostgresqlDatabase('tarefa03', **{'host': 'localhost', 'user': 'postgres', 'password': 'postgres'})
 
 class UnknownField(object):
     def __init__(self, *_, **__): pass
@@ -10,149 +13,53 @@ class BaseModel(Model):
     class Meta:
         database = database
 
-class Atividade(BaseModel):
+# Possible reference cycle: departamento
+class Funcionario(BaseModel):
+    coddepto = ForeignKeyField(column_name='coddepto', field='codigo', model=Departamento, null=True)
     codigo = AutoField()
-    dataconclusao = DateField(null=True)
-    datafim = DateField(null=True)
-    datainicio = DateField(null=True)
-    descricao = CharField(constraints=[SQL("DEFAULT 'NULL::character varying'")], null=True)
-    situacao = CharField(constraints=[SQL("DEFAULT 'NULL::character varying'")], null=True)
+    codsupervisor = ForeignKeyField(column_name='codsupervisor', field='codigo', model='self', null=True)
+    dtnasc = DateField(null=True)
+    nome = CharField(null=True)
+    salario = DecimalField(null=True)
+    sexo = CharField(null=True)
 
     class Meta:
-        table_name = 'atividade'
+        table_name = 'funcionario'
         schema = 'public'
 
-class Equipe(BaseModel):
+class Departamento(BaseModel):
+    codgerente = ForeignKeyField(column_name='codgerente', field='codigo', model=Funcionario, null=True)
     codigo = AutoField()
-    nomeequipe = CharField(constraints=[SQL("DEFAULT 'NULL::character varying'")], null=True)
+    ndescricao = CharField(null=True)
+    sigla = CharField(null=True)
 
     class Meta:
         table_name = 'equipe'
         schema = 'public'
 
 
-# Possible reference cycle: funcionario
-# class Departamento(BaseModel):
-#     codigo = AutoField()
-#     descricao = CharField()
-#     gerente = ForeignKeyField(column_name='gerente', field='codigo', model=Funcionario, null=True)
-#     sigla = CharField(unique=True)
-
-#     class Meta:
-#         table_name = 'departamento'
-#         schema = 'public'
-
-# class Funcionario(BaseModel):
-#     codigo = AutoField()
-#     datanasc = DateField(null=True)
-#     depto = ForeignKeyField(column_name='depto', field='codigo', model=Departamento, null=True)
-#     nome = CharField()
-#     salario = DecimalField(constraints=[SQL("DEFAULT NULL::numeric")], null=True)
-#     sexo = CharField(constraints=[SQL("DEFAULT 'NULL::bpchar'")], null=True)
-#     supervisor = ForeignKeyField(column_name='supervisor', field='codigo', model='self', null=True)
-
-#     class Meta:
-#         table_name = 'funcionario'
-#         schema = 'public'
-
-# class Membro(BaseModel):
-#     codequipe = ForeignKeyField(column_name='codequipe', field='codigo', model=Equipe, null=True)
-#     codfuncionario = ForeignKeyField(column_name='codfuncionario', field='codigo', model=Funcionario, null=True)
-#     codigo = AutoField()
-
-#     class Meta:
-#         table_name = 'membro'
-#         schema = 'public'
-
-# class AtividadeMembro(BaseModel):
-#     codatividade = ForeignKeyField(column_name='codatividade', field='codigo', model=Atividade)
-#     codmembro = ForeignKeyField(column_name='codmembro', field='codigo', model=Membro)
-
-#     class Meta:
-#         table_name = 'atividade_membro'
-#         indexes = (
-#             (('codatividade', 'codmembro'), True),
-#         )
-#         schema = 'public'
-#         primary_key = CompositeKey('codatividade', 'codmembro')
-
-# class Projeto(BaseModel):
-#     codigo = AutoField()
-#     dataconclusao = DateField(null=True)
-#     datafim = DateField(null=True)
-#     datainicio = DateField(null=True)
-#     depto = ForeignKeyField(column_name='depto', field='codigo', model=Departamento, null=True)
-#     descricao = CharField(constraints=[SQL("DEFAULT 'NULL::character varying'")], null=True)
-#     equipe = ForeignKeyField(column_name='equipe', field='codigo', model=Equipe, null=True)
-#     responsavel = ForeignKeyField(column_name='responsavel', field='codigo', model=Funcionario, null=True)
-#     situacao = CharField(constraints=[SQL("DEFAULT 'NULL::character varying'")], null=True)
-
-#     class Meta:
-#         table_name = 'projeto'
-#         schema = 'public'
-
-# class AtividadeProjeto(BaseModel):
-#     codatividade = ForeignKeyField(column_name='codatividade', field='codigo', model=Atividade)
-#     codprojeto = ForeignKeyField(column_name='codprojeto', field='codigo', model=Projeto)
-
-#     class Meta:
-#         table_name = 'atividade_projeto'
-#         indexes = (
-#             (('codprojeto', 'codatividade'), True),
-#         )
-#         schema = 'public'
-#         primary_key = CompositeKey('codatividade', 'codprojeto')
-
-class Cliente(BaseModel):
+class Projeto(BaseModel):
+    coddepto = ForeignKeyField(column_name='coddepto', field='codigo', model=Departamento, null=True)
     codigo = AutoField()
-    endereco = CharField(null=True)
+    codresponsavel = ForeignKeyField(column_name='codresponsavel', field='codigo', model=Funcionario, null=True)
+    datafim = DateField(null=True)
+    datainicio = DateField(null=True)
+    descricao = CharField(null=True)
     nome = CharField(null=True)
 
     class Meta:
-        table_name = 'cliente'
+        table_name = 'projeto'
         schema = 'public'
 
-class Piloto(BaseModel):
+class Atividade(BaseModel):
     codigo = AutoField()
-    nome = CharField(null=True)
-    num_voos = IntegerField(null=True)
+    codprojeto = ForeignKeyField(column_name='codprojeto', field='codigo', model=Projeto, null=True)
+    datafim = DateField(null=True)
+    datainicio = DateField(null=True)
+    descricao = CharField(null=True)
+
 
     class Meta:
-        table_name = 'piloto'
+        table_name = 'atividade'
         schema = 'public'
 
-class Voo(BaseModel):
-    cod_piloto = ForeignKeyField(column_name='cod_piloto', field='codigo', model=Piloto, null=True)
-    codigo = AutoField()
-    distancia = DecimalField(null=True)
-    num_passageiros = IntegerField(null=True)
-    tipo = CharField(null=True)
-
-    class Meta:
-        table_name = 'voo'
-        schema = 'public'
-
-class ClienteVoo(BaseModel):
-    classe = CharField(null=True)
-    cod_cliente = ForeignKeyField(column_name='cod_cliente', field='codigo', model=Cliente)
-    cod_voo = ForeignKeyField(column_name='cod_voo', field='codigo', model=Voo)
-
-    class Meta:
-        table_name = 'cliente_voo'
-        indexes = (
-            (('cod_cliente', 'cod_voo'), True),
-        )
-        schema = 'public'
-        primary_key = CompositeKey('cod_cliente', 'cod_voo')
-
-class Milhas(BaseModel):
-    cod_cliente = ForeignKeyField(column_name='cod_cliente', field='codigo', model=Cliente)
-    quantidade = IntegerField()
-
-    class Meta:
-        table_name = 'milhas'
-        indexes = (
-            (('cod_cliente', 'quantidade'), True),
-        )
-        schema = 'public'
-        primary_key = CompositeKey('cod_cliente', 'quantidade')
