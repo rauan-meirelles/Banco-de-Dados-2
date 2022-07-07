@@ -2,7 +2,7 @@ from matplotlib.pyplot import table
 from peewee import *
 
 database = PostgresqlDatabase('tarefa03', **{'host': 'localhost', 'port': 5432, 'user': 'postgres', 'password': 'postgres'})
-database.connect()
+
 
 class UnknownField(object):
     def __init__(self, *_, **__): pass
